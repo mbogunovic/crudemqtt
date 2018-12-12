@@ -31,8 +31,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <Reference Include="M2Mqtt.Net, Version=4.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Plt.M2Mqtt.4.3.0.2\lib\net45\M2Mqtt.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -54,6 +58,10 @@
     <ProjectReference Include="..\Mqtt.Common\Mqtt.Common.csproj">
       <Project>{0c4c414d-e1ab-4728-a257-0c2d09137297}</Project>
       <Name>Mqtt.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mqtt.DomainModel\Mqtt.DomainModel.csproj">
+      <Project>{79C49A69-22CF-4125-83B3-F0B755D2D6B6}</Project>
+      <Name>Mqtt.DomainModel</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

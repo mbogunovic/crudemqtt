@@ -4,13 +4,17 @@
 	{
 		public const string MQTT_BROKER_ADDRESS = "127.0.0.1";
 		public const int MQTT_BROKER_PORT = 1883;
-		public const string MANAGEMENT_TOPIC = "/management";
+		public const string ROOM_TOPIC = "/room";
+		public const string USER_TOPIC = "/user";
 
-		public enum ManagementCommands
+		public enum UserActions
 		{
-			CreateRoom,
-			JoinRoom,
-			DeleteRoom,
+			UserLogged
+		}
+
+		public enum RoomActions
+		{
+			CreateRoom
 		}
 	}
 }

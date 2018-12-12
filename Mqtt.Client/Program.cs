@@ -1,4 +1,4 @@
-﻿using Mqtt.Common;
+﻿using Mqtt.Common.Domains;
 
 namespace Mqtt.Client
 {

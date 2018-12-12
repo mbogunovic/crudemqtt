@@ -1,7 +1,10 @@
-﻿using Mqtt.Common;
+﻿using Mqtt.Common.Domains;
+using Mqtt.DomainModel.Domain;
+using Newtonsoft.Json;
 using System;
-using System.Text;
+using Mqtt.Common.Models;
 using uPLibrary.Networking.M2Mqtt.Messages;
+using static Mqtt.Common.Constants;
 
 namespace Mqtt.Client
 {
@@ -9,13 +12,16 @@ namespace Mqtt.Client
 	{
 		protected override void Execute()
 		{
-			client.Publish(Constants.MANAGEMENT_TOPIC, Encoding.UTF8.GetBytes("test"), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
+			var room = new Room() {CreatedById = this.Id, Name = "First room!" };
+
+			this.Publish(JsonConvert.SerializeObject(new RoomActionModel(RoomActions.CreateRoom, room)), ROOM_TOPIC);
+
 			Console.ReadKey();
 		}
 
 		protected override void MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
 		{
-			if (e.Topic.Equals(Constants.MANAGEMENT_TOPIC))
+			if (e.Topic.Equals(ROOM_TOPIC))
 			{
 				Console.WriteLine($"At {DateTime.Now.ToString()}, Anonymous:{System.Text.Encoding.UTF8.GetString(e.Message)}");
 			}

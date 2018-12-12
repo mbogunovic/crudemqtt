@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Mqtt.DomainModel.Domain
 {
 	public class User : BaseModel
 	{
+		public User() { }
+
+		public User(Guid id)
+		{
+			this.Id = id;
+		}
+
+		public virtual ICollection<Room> CreatedRooms { get; set; }
 	}
 }

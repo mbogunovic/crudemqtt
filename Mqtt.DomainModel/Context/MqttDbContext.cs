@@ -1,6 +1,8 @@
 ﻿using Mqtt.DomainModel.Domain;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using Mqtt.DomainModel.Repository.Definitions;
+using Mqtt.DomainModel.Repository.Interfaces;
 
 namespace Mqtt.DomainModel.Context
 {
@@ -10,7 +12,9 @@ namespace Mqtt.DomainModel.Context
 		{
 		}
 
-		public DbSet<User> Users { get; set; }
+		public IUserRepository Users => new UserRepository(this);
+		public IRoomRepository Rooms => new RoomRepository(this);
+		public IMessageRepository Messages => new MessageRepository(this);
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
