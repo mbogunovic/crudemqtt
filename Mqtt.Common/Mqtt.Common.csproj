@@ -50,17 +50,11 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="Domains\ClientBase.cs" />
-    <Compile Include="Models\ClientSettingsModel.cs" />
-    <Compile Include="Models\UserActionModel.cs" />
-    <Compile Include="Models\RoomActionModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <Content Include="settings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mqtt.DomainModel\Mqtt.DomainModel.csproj">

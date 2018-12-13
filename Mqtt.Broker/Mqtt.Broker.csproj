@@ -54,10 +54,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Mqtt.BrokerClient\Mqtt.BrokerClient.csproj">
-      <Project>{B97EACB1-8D05-47B9-A5B3-E3EC0EFCE60B}</Project>
-      <Name>Mqtt.BrokerClient</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Mqtt.Common\Mqtt.Common.csproj">
       <Project>{0C4C414D-E1AB-4728-A257-0C2D09137297}</Project>
       <Name>Mqtt.Common</Name>

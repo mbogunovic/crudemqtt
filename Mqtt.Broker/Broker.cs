@@ -1,5 +1,4 @@
-﻿using Mqtt.BrokerClient;
-using System;
+﻿using System;
 using uPLibrary.Networking.M2Mqtt;
 
 namespace CRUDE.Mqtt.Broker
@@ -18,7 +17,6 @@ namespace CRUDE.Mqtt.Broker
 			Broker broker = new Broker();
 			broker.service.Start();
 
-			BrokerClient.Initialize<BrokerClient>();
 			Console.WriteLine("Press any key to stop the service");
 			Console.ReadKey();
 
