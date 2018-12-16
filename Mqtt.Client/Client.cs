@@ -1,6 +1,6 @@
 ﻿using Mqtt.Common.Domains;
 using System;
-using System.Threading;
+using System.Collections.Generic;
 using uPLibrary.Networking.M2Mqtt.Messages;
 using static Mqtt.Common.Constants;
 
@@ -9,6 +9,7 @@ namespace Mqtt.Client
 	class Client : ClientBase
 	{
 		private int cursorYPos;
+		private IList<string> Messages { get; set; } = new List<string>();
 		protected override void Execute()
 		{
 			Console.SetWindowSize(80, 30);
@@ -22,7 +23,13 @@ namespace Mqtt.Client
 				{
 					case '1':
 						this.Subscribe(ROOM_TOPIC + $"/{this.Id}");
-						Console.WriteLine($"\nRoom successfully created, room id is: {this.Id}");
+						Console.Clear();
+						var createdMessage = $"Room successfully created, room id is: {this.Id}";
+						var createdMessage1 = "To exit a room enter \\q as message";
+						Console.WriteLine(createdMessage);
+						Console.WriteLine(createdMessage1);
+						Messages.Add(createdMessage);
+						Messages.Add(createdMessage1);
 						this.Chatroom(this.Id);
 						break;
 					case '2':
@@ -35,13 +42,17 @@ namespace Mqtt.Client
 						}
 
 						this.Subscribe(ROOM_TOPIC + $"/{roomId}");
-						Console.WriteLine($"You have successfully joined a room with id: {roomId}");
+						Console.Clear();
+						var joinedMessage = $"You have successfully joined a room with id: {roomId}";
+						Console.WriteLine(joinedMessage);
+						Messages.Add(joinedMessage);
 						this.Chatroom(roomId);
 						break;
 					case '3':
 						Environment.Exit(0);
 						break;
 					default:
+						Console.Clear();
 						Console.WriteLine("\nWrong input. Please choose a valid option.");
 						break;
 				}
@@ -50,13 +61,10 @@ namespace Mqtt.Client
 
 		private void Chatroom(Guid roomId)
 		{
-			Console.WriteLine("To exit a room enter \\q as message");
 			bool flag = true;
-			cursorYPos = Console.CursorTop;
+			Console.Write("You:");
 			while (flag)
 			{
-				Thread.Sleep(200);
-				Console.Write("You:");
 				var message = Console.ReadLine();
 				switch (message)
 				{
@@ -72,8 +80,18 @@ namespace Mqtt.Client
 
 		protected override void MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
 		{
-			Console.SetCursorPosition(0, ++cursorYPos);
-			Console.WriteLine($"Anonymous({DateTime.Now.ToString("HH:mm")}):{System.Text.Encoding.UTF8.GetString(e.Message)}");
+			Messages.Add($"Anonymous({DateTime.Now.ToString("HH:mm:ss")}):{System.Text.Encoding.UTF8.GetString(e.Message)}");
+			Console.Clear();
+			Console.SetCursorPosition(0, 0);
+			cursorYPos = Console.CursorTop;
+
+			foreach (var message in Messages)
+			{
+				Console.SetCursorPosition(0, cursorYPos++);
+				Console.WriteLine(message);
+			}
+
+			Console.Write("You:");
 		}
 	}
 }
