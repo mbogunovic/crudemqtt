@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Chat.DomainModel.Context;
+using Chat.DomainModel.Domain;
+using Newtonsoft.Json;
 using System;
 using System.IO;
 
@@ -57,6 +59,11 @@ namespace Chat.Common.Models
 			using (StreamWriter w = File.CreateText(path))
 			{
 				new JsonSerializer().Serialize(w, this);
+			}
+
+			using (var db = new ChatDbContext())
+			{
+				db.UsersRepository.Add(new User(this.ClientId, this.DisplayName));
 			}
 		}
 	}

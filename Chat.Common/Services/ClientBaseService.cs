@@ -1,7 +1,9 @@
 ﻿using Chat.Common.Models;
+using Chat.DomainModel.Context;
 using System;
 using System.Net;
 using System.Text;
+using Chat.DomainModel.Domain;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
 
@@ -13,8 +15,17 @@ namespace Chat.Common.Services
 
 		public Guid Id => this.Settings.ClientId;
 		public string DisplayName => this.Settings.DisplayName;
+
 		public void SetDisplayName(string displayName)
-			=> this.Settings.DisplayName = displayName;
+		{
+			this.Settings.DisplayName = displayName;
+
+			using (var db = new ChatDbContext())
+			{
+				db.UsersRepository.Update(new User(this.Id, displayName));
+			}
+		}
+
 		private ClientSettingsModel Settings { get; }
 
 
@@ -32,7 +43,7 @@ namespace Chat.Common.Services
 		public static T Initialize<T>() where T : ClientBaseService
 		{
 			T instance = (T)Activator.CreateInstance(typeof(T));
-			instance.Client.ProtocolVersion = MqttProtocolVersion.Version_3_1;
+
 			try
 			{
 				if (!instance.Client.IsConnected)

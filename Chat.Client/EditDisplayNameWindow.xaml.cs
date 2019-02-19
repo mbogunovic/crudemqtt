@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using Chat.Client.Context;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -9,18 +10,22 @@ namespace Chat.Client
 	/// </summary>
 	public partial class EditDisplayNameWindow : Window
 	{
+		public readonly ClientContext s = Application.Current.FindResource("context") as ClientContext;
+
 		private TextBlock tblDisplayName;
 
 		public EditDisplayNameWindow(ref TextBlock tblDisplayName)
 		{
 			this.tblDisplayName = tblDisplayName;
 			InitializeComponent();
+			this.tbxDisplayName.Text = s._service.DisplayName;
 		}
 
 		private void TbxDisplayName_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.Key == Key.Return)
 			{
+				s._service.SetDisplayName(this.tbxDisplayName.Text);
 				this.tblDisplayName.Text = "Hello " + this.tbxDisplayName.Text;
 				this.Close();
 			}

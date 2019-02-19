@@ -16,8 +16,7 @@ namespace Chat.DomainModel.Domain
 
 		[Required]
 		public string DisplayName { get; set; }
-		[Required]
-		public string Test { get; set; }
+
 		public virtual ICollection<Room> CreatedRooms { get; set; }
 	}
 }
