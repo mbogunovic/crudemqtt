@@ -9,14 +9,14 @@ namespace Chat.Client
 	/// </summary>
 	public partial class MainWindow : Window
 	{
-		public readonly ClientContext s = Application.Current.FindResource("context") as ClientContext;
+		public readonly ClientContext _context = Application.Current.FindResource("context") as ClientContext;
 
 		public MainWindow()
 		{
 			InitializeComponent();
 
-			tbDisplayName.Text = $"Hello {s._service.DisplayName}";
-			if (s._service == null)
+			tbDisplayName.Text = $"Hello {_context.Service.DisplayName}";
+			if (_context.Service == null)
 				Application.Current.Shutdown();
 		}
 
@@ -46,5 +46,13 @@ namespace Chat.Client
 
 		private void Minimize_MouseDown(object sender, MouseButtonEventArgs e) =>
 			this.WindowState = WindowState.Minimized;
+
+		private void btnCreateRoom_Click(object sender, RoutedEventArgs e)
+		{
+			if (string.IsNullOrWhiteSpace(this.tbxRoomName.Text))
+			{
+				this._context.
+			}
+		}
 	}
 }
