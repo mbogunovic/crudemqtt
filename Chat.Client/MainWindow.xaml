@@ -1,0 +1,200 @@
+﻿<Window x:Class="Chat.Client.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Chat.Client"
+        mc:Ignorable="d"
+        Height="450" Width="800"
+		WindowStyle="None"
+		WindowStartupLocation="CenterScreen"
+		Background="Transparent">
+	<Grid x:Name="gLayout" Background="White">
+		<Border Grid.Column="0" Grid.ColumnSpan="4" Background="Aquamarine" BorderBrush="Black" BorderThickness="0 0 0 0.5">
+			<Grid>
+				<TextBlock x:Name="tbDisplayName" 
+						   Text="Hello User"
+						   Margin="10,10,0,0" 
+						   PreviewMouseDown="TbDisplayName_PreviewMouseDown"
+						   Cursor="Hand" HorizontalAlignment="Left"
+						   FontSize="10"
+						   ToolTip="Click to change your display name"/>
+				<Image x:Name="close" Cursor="Hand" HorizontalAlignment="Right" MouseDown="Close_MouseDown">
+					<Image.Style>
+						<Style TargetType="{x:Type Image}">
+							<Setter Property="Source" Value="/images/close.ico"/>
+							<Style.Triggers>
+								<Trigger Property="IsMouseOver" Value="True">
+									<Setter Property="Source" Value="/images/close_hover.ico"/>
+								</Trigger>
+							</Style.Triggers>
+						</Style>
+					</Image.Style>
+				</Image>
+				<Image x:Name="maximize" HorizontalAlignment="Right" Margin="0,0,30,0" Cursor="Hand" MouseDown="Maximize_MouseDown">
+					<Image.Style>
+						<Style TargetType="{x:Type Image}">
+							<Setter Property="Source" Value="/images/maximize.ico"/>
+							<Style.Triggers>
+								<Trigger Property="IsMouseOver" Value="True">
+									<Setter Property="Source" Value="/images/maximize_hover.ico"/>
+								</Trigger>
+							</Style.Triggers>
+						</Style>
+					</Image.Style>
+				</Image>
+				<Image x:Name="restoreDown" HorizontalAlignment="Right" Margin="0,0,30,0" Cursor="Hand" MouseDown="RestoreDown_MouseDown" Visibility="Hidden">
+					<Image.Style>
+						<Style TargetType="{x:Type Image}">
+							<Setter Property="Source" Value="/images/restoreDown.ico"/>
+							<Style.Triggers>
+								<Trigger Property="IsMouseOver" Value="True">
+									<Setter Property="Source" Value="/images/restoreDown_hover.ico"/>
+								</Trigger>
+							</Style.Triggers>
+						</Style>
+					</Image.Style>
+				</Image>
+				<Image x:Name="minimize" HorizontalAlignment="Right" Margin="0,0,60,0" Cursor="Hand" MouseDown="Minimize_MouseDown">
+					<Image.Style>
+						<Style TargetType="{x:Type Image}">
+							<Setter Property="Source" Value="/images/minimize.ico"/>
+							<Style.Triggers>
+								<Trigger Property="IsMouseOver" Value="True">
+									<Setter Property="Source" Value="/images/minimize_hover.ico"/>
+								</Trigger>
+							</Style.Triggers>
+						</Style>
+					</Image.Style>
+				</Image>
+			</Grid>
+		</Border>
+		<TabControl x:Name="tcNavigation" Grid.RowSpan="3" Grid.Row="1" Grid.Column="0" TabStripPlacement="Left" >
+			<TabItem>
+					<TabItem.Header>
+					<StackPanel ToolTip="Home">
+						<Image x:Name="home"  Cursor="Hand">
+							<Image.Style>
+								<Style TargetType="{x:Type Image}">
+									<Setter Property="Source" Value="/images/home.ico"/>
+									<Style.Triggers>
+										<Trigger Property="IsMouseOver" Value="True">
+											<Setter Property="Source" Value="/images/home_hover.ico"/>
+										</Trigger>
+									</Style.Triggers>
+								</Style>
+							</Image.Style>
+						</Image>
+					</StackPanel>
+					</TabItem.Header>
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="20"/>
+						<RowDefinition Height="*"/>
+						<RowDefinition Height="20"/>
+					</Grid.RowDefinitions>
+					<TextBlock Text="Join room by id:" HorizontalAlignment="Left"/>
+					<TextBox Margin="90,0,0,0" Width="150" HorizontalAlignment="Left"/>
+					<Button BorderBrush="Transparent" Margin="250,0,0,0" Padding="2,2,2,2" Width="40" HorizontalAlignment="Left">
+						<TextBlock Text="Join"/>
+					</Button>
+					<TextBlock Text="Search:" HorizontalAlignment="Right" Margin="0, 0, 210, 0"/>
+					<TextBox Margin="0,0,50,0" Width="150" HorizontalAlignment="Right"/>
+					<Button BorderBrush="Transparent" Padding="2,2,2,2" Width="40" HorizontalAlignment="Right">
+						<Image Source="/images/search.ico" />
+					</Button>
+
+					<DataGrid Margin="0,10,0,0" Grid.Row="1">
+						
+					</DataGrid>
+				</Grid>
+				</TabItem>
+			<TabItem>
+				<TabItem.Header >
+					<StackPanel ToolTip="Joined rooms">
+						<Image x:Name="rooms"  Cursor="Hand">
+							<Image.Style>
+								<Style TargetType="{x:Type Image}">
+									<Setter Property="Source" Value="/images/rooms.ico"/>
+									<Style.Triggers>
+										<Trigger Property="IsMouseOver" Value="True">
+											<Setter Property="Source" Value="/images/rooms_hover.ico"/>
+										</Trigger>
+									</Style.Triggers>
+								</Style>
+							</Image.Style>
+						</Image>
+					</StackPanel>
+				</TabItem.Header>
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="20"/>
+						<RowDefinition Height="*"/>
+						<RowDefinition Height="20"/>
+					</Grid.RowDefinitions>
+					<TextBlock Text="Enter room by id:" HorizontalAlignment="Left"/>
+					<TextBox Margin="95,0,0,0" Width="150" HorizontalAlignment="Left"/>
+					<Button BorderBrush="Transparent" Margin="255,0,0,0" Padding="2,2,2,2" Width="40" HorizontalAlignment="Left">
+						<TextBlock Text="Enter"/>
+					</Button>
+					<TextBlock Text="Search:" HorizontalAlignment="Right" Margin="0, 0, 210, 0"/>
+					<TextBox Margin="0,0,50,0" Width="150" HorizontalAlignment="Right"/>
+					<Button BorderBrush="Transparent" Padding="2,2,2,2" Width="40" HorizontalAlignment="Right">
+						<Image Source="/images/search.ico" />
+					</Button>
+
+					<DataGrid Margin="0,10,0,0" Grid.Row="1">
+
+					</DataGrid>
+				</Grid>
+			</TabItem>
+			<TabItem>
+					<TabItem.Header>
+					<StackPanel ToolTip="My rooms">
+						<Image x:Name="myrooms"  Cursor="Hand">
+							<Image.Style>
+								<Style TargetType="{x:Type Image}">
+									<Setter Property="Source" Value="/images/myrooms.ico"/>
+									<Style.Triggers>
+										<Trigger Property="IsMouseOver" Value="True">
+											<Setter Property="Source" Value="/images/myrooms_hover.ico"/>
+										</Trigger>
+									</Style.Triggers>
+								</Style>
+							</Image.Style>
+						</Image>
+					</StackPanel>
+					</TabItem.Header>
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="20"/>
+						<RowDefinition Height="*"/>
+						<RowDefinition Height="20"/>
+					</Grid.RowDefinitions>
+					<TextBlock Text="Name:" HorizontalAlignment="Left"/>
+					<TextBox Margin="45,0,0,0" Width="150" HorizontalAlignment="Left"/>
+					<Button BorderBrush="Transparent" Margin="205,0,0,0" Padding="2,2,2,2" HorizontalAlignment="Left">
+						<TextBlock Text="Create room" Padding="20,0,20,0"/>
+					</Button>
+					<TextBlock Text="Search:" HorizontalAlignment="Right" Margin="0, 0, 210, 0"/>
+					<TextBox Margin="0,0,50,0" Width="150" HorizontalAlignment="Right"/>
+					<Button BorderBrush="Transparent" Padding="4,4,4,4" Width="40" HorizontalAlignment="Right">
+						<Image Source="/images/search.ico" />
+					</Button>
+
+					<DataGrid Margin="0,10,0,0" Grid.Row="1">
+
+					</DataGrid>
+				</Grid>
+			</TabItem>
+			</TabControl>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="30"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="20" />
+		</Grid.ColumnDefinitions>
+	</Grid>
+</Window>

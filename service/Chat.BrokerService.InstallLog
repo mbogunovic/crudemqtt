@@ -1,0 +1,47 @@
+﻿Installing assembly 'D:\Max\Projects\Chat\BrokerService\bin\Debug\Chat.BrokerService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\Max\Projects\Chat\BrokerService\bin\Debug\Chat.BrokerService.InstallLog
+   assemblypath = D:\Max\Projects\Chat\BrokerService\bin\Debug\Chat.BrokerService.exe
+Installing service Mqtt Broker...
+Service Mqtt Broker has been successfully installed.
+Creating EventLog source Mqtt Broker in log Application...
+Committing assembly 'D:\Max\Projects\Chat\BrokerService\bin\Debug\Chat.BrokerService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\Max\Projects\Chat\BrokerService\bin\Debug\Chat.BrokerService.InstallLog
+   assemblypath = D:\Max\Projects\Chat\BrokerService\bin\Debug\Chat.BrokerService.exe
+Uninstalling assembly 'D:\Max\Projects\Chat\BrokerService\bin\Debug\Chat.BrokerService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\Max\Projects\Chat\BrokerService\bin\Debug\Chat.BrokerService.InstallLog
+   assemblypath = D:\Max\Projects\Chat\BrokerService\bin\Debug\Chat.BrokerService.exe
+Removing EventLog source Mqtt Broker.
+Service Mqtt Broker is being removed from the system...
+Service Mqtt Broker was successfully removed from the system.
+Installing assembly 'D:\Max\Projects\Chat\Chat.BrokerService\bin\Debug\Chat.BrokerService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\Max\Projects\Chat\Chat.BrokerService\bin\Debug\Chat.BrokerService.InstallLog
+   assemblypath = D:\Max\Projects\Chat\Chat.BrokerService\bin\Debug\Chat.BrokerService.exe
+Installing service Mqtt Broker...
+Creating EventLog source Mqtt Broker in log Application...
+Rolling back assembly 'D:\Max\Projects\Chat\Chat.BrokerService\bin\Debug\Chat.BrokerService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\Max\Projects\Chat\Chat.BrokerService\bin\Debug\Chat.BrokerService.InstallLog
+   assemblypath = D:\Max\Projects\Chat\Chat.BrokerService\bin\Debug\Chat.BrokerService.exe
+Restoring event log to previous state for source Mqtt Broker.
+Installing assembly 'D:\Max\Projects\Chat\service\Chat.BrokerService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\Max\Projects\Chat\service\Chat.BrokerService.InstallLog
+   assemblypath = D:\Max\Projects\Chat\service\Chat.BrokerService.exe
+Installing service Mqtt Broker...
+Service Mqtt Broker has been successfully installed.
+Creating EventLog source Mqtt Broker in log Application...
+Committing assembly 'D:\Max\Projects\Chat\service\Chat.BrokerService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = D:\Max\Projects\Chat\service\Chat.BrokerService.InstallLog
+   assemblypath = D:\Max\Projects\Chat\service\Chat.BrokerService.exe
