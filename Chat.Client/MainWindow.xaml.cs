@@ -15,6 +15,7 @@ namespace Chat.Client
 		{
 			InitializeComponent();
 
+			tbDisplayName.Text = $"Hello {s._service.DisplayName}";
 			if (s._service == null)
 				Application.Current.Shutdown();
 		}

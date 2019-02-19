@@ -20,12 +20,18 @@ namespace Chat.Common.Models
 
 			if (!File.Exists(path))
 			{
-				File.Create(path);
-			}
+				using (StreamReader r = new StreamReader(File.Create(path)))
+				{
+					settings = JsonConvert.DeserializeObject<ClientSettingsModel>(r.ReadToEnd());
+				}
 
-			using (StreamReader r = new StreamReader(path))
+			}
+			else
 			{
-				settings = JsonConvert.DeserializeObject<ClientSettingsModel>(r.ReadToEnd());
+				using (StreamReader r = new StreamReader(path))
+				{
+					settings = JsonConvert.DeserializeObject<ClientSettingsModel>(r.ReadToEnd());
+				}
 			}
 
 			if (settings == null)
@@ -34,6 +40,7 @@ namespace Chat.Common.Models
 			if (settings.ClientId.Equals(Guid.Empty))
 			{
 				settings.ClientId = Guid.NewGuid();
+				settings.DisplayName = "Anon" + settings.ClientId.ToString();
 				settings.SaveChanges(path);
 			}
 

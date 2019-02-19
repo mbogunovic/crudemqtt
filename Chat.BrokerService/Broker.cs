@@ -1,20 +1,22 @@
-﻿using uPLibrary.Networking.M2Mqtt;
+﻿using MQTTnet;
+using MQTTnet.Server;
+using System.Threading.Tasks;
 
 namespace Chat.BrokerService
 {
 	internal class Broker
 	{
-		private MqttBroker service { get; }
+		private IMqttServer service { get; }
 
 		internal Broker()
 		{
-			service = new MqttBroker();
+			service = new MqttFactory().CreateMqttServer();
 		}
 
-		internal void Initialize() =>
-			this.service.Start();
+		internal async Task InitializeAsync() =>
+			await service.StartAsync(new MqttServerOptions());
 
 		internal void Stop() =>
-			this.service.Stop();
+			this.service.StopAsync();
 	}
 }

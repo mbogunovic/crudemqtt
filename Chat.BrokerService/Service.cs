@@ -14,7 +14,7 @@ namespace Chat.BrokerService
 		protected override void OnStart(string[] args)
 		{
 			broker = new Broker();
-			broker.Initialize();
+			broker.InitializeAsync();
 		}
 
 		protected override void OnStop()

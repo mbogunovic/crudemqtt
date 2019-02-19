@@ -31,20 +31,20 @@ namespace Chat.Common.Services
 
 		public static T Initialize<T>() where T : ClientBaseService
 		{
-			T brokerClient = (T)Activator.CreateInstance(typeof(T));
-
+			T instance = (T)Activator.CreateInstance(typeof(T));
+			instance.Client.ProtocolVersion = MqttProtocolVersion.Version_3_1;
 			try
 			{
-				if (!brokerClient.Client.IsConnected)
-					brokerClient.Connect();
+				if (!instance.Client.IsConnected)
+					instance.Connect();
 
-				brokerClient.Execute();
-				return brokerClient;
+				instance.Execute();
+				return instance;
 			}
 			catch(Exception e)
 			{
-				if (brokerClient.Client.IsConnected)
-					brokerClient.Client.Disconnect();
+				if (instance.Client.IsConnected)
+					instance.Client.Disconnect();
 			}
 
 			return null;

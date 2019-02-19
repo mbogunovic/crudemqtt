@@ -8,21 +8,10 @@ namespace Chat.Client.Services
 	{
 		protected override void Execute()
 		{
-			using(var db = new ChatDbContext())
-			{
-				var user = db.UsersRepository.GetById(this.Id);
-
-				if (user == null)
-				{
-					App.Current.MainWindow = new MainWindow();
-					App.Current.MainWindow.Show();
-				}
-			}
 		}
 
 		protected override void MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
 		{
-
 		}
 	}
 }
