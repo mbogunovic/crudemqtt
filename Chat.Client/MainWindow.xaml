@@ -72,7 +72,7 @@
 		<TabControl x:Name="tcNavigation" Grid.RowSpan="3" Grid.Row="1" Grid.Column="0" TabStripPlacement="Left" >
 			<TabItem>
 					<TabItem.Header>
-					<StackPanel ToolTip="Home">
+					<StackPanel x:Name="btnHome" ToolTip="Home" MouseDown="btnHome_MouseDown">
 						<Image x:Name="home"  Cursor="Hand">
 							<Image.Style>
 								<Style TargetType="{x:Type Image}">
@@ -104,8 +104,11 @@
 						<Image Source="/images/search.ico" />
 					</Button>
 
-					<DataGrid Margin="0,10,0,0" Grid.Row="1">
-						
+					<DataGrid x:Name="dgHome" Margin="0,10,0,0" Grid.Row="1" CanUserAddRows="False" AutoGenerateColumns="False" GridLinesVisibility="None" CanUserResizeRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserReorderColumns="False">
+						<DataGrid.Columns>
+							<DataGridTextColumn IsReadOnly = "True" Width="*" Header="Id" Binding="{Binding Id}" />
+							<DataGridTextColumn IsReadOnly = "True" Width="*" Header="Name" Binding="{Binding Name}" />
+						</DataGrid.Columns>
 					</DataGrid>
 				</Grid>
 				</TabItem>
@@ -148,9 +151,9 @@
 					</DataGrid>
 				</Grid>
 			</TabItem>
-			<TabItem>
+			<TabItem x:Name="tabMyRooms">
 					<TabItem.Header>
-					<StackPanel ToolTip="My rooms">
+					<StackPanel x:Name="btnMyRooms" ToolTip="My rooms" MouseDown="btnMyRooms_MouseDown">
 						<Image x:Name="myrooms"  Cursor="Hand">
 							<Image.Style>
 								<Style TargetType="{x:Type Image}">
@@ -177,13 +180,34 @@
 						<TextBlock Text="Create room" Padding="20,0,20,0"/>
 					</Button>
 					<TextBlock Text="Search:" HorizontalAlignment="Right" Margin="0, 0, 210, 0"/>
-					<TextBox Margin="0,0,50,0" Width="150" HorizontalAlignment="Right"/>
-					<Button BorderBrush="Transparent" Padding="4,4,4,4" Width="40" HorizontalAlignment="Right">
+					<TextBox x:Name="tbxMyRoomsSearch" Margin="0,0,50,0" Width="150" HorizontalAlignment="Right"/>
+					<Button x:Name="btnMyRoomsSearch" BorderBrush="Transparent" Padding="4,4,4,4" Width="40" HorizontalAlignment="Right" Click="btnMyRoomsSearch_Click">
 						<Image Source="/images/search.ico" />
 					</Button>
 
-					<DataGrid Margin="0,10,0,0" Grid.Row="1">
-
+					<DataGrid x:Name="dgMyRooms" Margin="0,10,0,0" Grid.Row="1" CanUserAddRows="False" AutoGenerateColumns="False" GridLinesVisibility="None" CanUserResizeRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserReorderColumns="False">
+						<DataGrid.Columns>
+							<DataGridTextColumn IsReadOnly = "True" Width="*" Header="Id" Binding="{Binding Id}" />
+							<DataGridTextColumn Width="*" Header="Name" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+							<DataGridTemplateColumn Width="100" Header="Actions">
+								<DataGridTemplateColumn.CellTemplate>
+									<DataTemplate>
+										<Grid>
+											<Grid.ColumnDefinitions>
+												<ColumnDefinition Width="*" />
+												<ColumnDefinition Width="*" />
+											</Grid.ColumnDefinitions>
+											<Button x:Name="btnMyRoomsSave" Grid.Column="0" Background="Transparent" BorderBrush="Transparent" Padding="4,4,4,4" Width="30" Click="btnMyRoomsSave_Click">
+												<Image Source="/images/save.ico" />
+											</Button>
+											<Button x:Name="btnMyRoomsDelete" Grid.Column="1" Background="Transparent" BorderBrush="Transparent" Padding="4,4,4,4" Width="30" Click="btnMyRoomsDelete_Click">
+												<Image Source="/images/trash.ico" />
+											</Button>
+										</Grid>
+									</DataTemplate>
+								</DataGridTemplateColumn.CellTemplate>
+							</DataGridTemplateColumn>
+						</DataGrid.Columns>
 					</DataGrid>
 				</Grid>
 			</TabItem>

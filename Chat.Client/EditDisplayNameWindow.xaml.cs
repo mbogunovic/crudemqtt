@@ -18,14 +18,14 @@ namespace Chat.Client
 		{
 			this.tblDisplayName = tblDisplayName;
 			InitializeComponent();
-			this.tbxDisplayName.Text = s.Service.DisplayName;
+			this.tbxDisplayName.Text = s.Client.DisplayName;
 		}
 
 		private void TbxDisplayName_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.Key == Key.Return)
 			{
-				s.Service.SetDisplayName(this.tbxDisplayName.Text);
+				s.Client.SetDisplayName(this.tbxDisplayName.Text);
 				this.tblDisplayName.Text = "Hello " + this.tbxDisplayName.Text;
 				this.Close();
 			}

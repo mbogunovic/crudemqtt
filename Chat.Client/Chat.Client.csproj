@@ -197,5 +197,11 @@
       <Name>Chat.DomainModel</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\trash.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\save.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

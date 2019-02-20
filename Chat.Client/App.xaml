@@ -55,5 +55,28 @@
 				</Setter.Value>
 			</Setter>
 		</Style>
+
+		<Style TargetType="DataGrid">
+			<Setter Property="Background" Value="White"></Setter>
+		</Style>
+
+		<Style TargetType="DataGridColumnHeader">
+			<Setter Property="Background" Value="AntiqueWhite"></Setter>
+			<Setter Property="Padding" Value="5,5,5,5"></Setter>
+		</Style>
+		<Style TargetType="{x:Type DataGridRow}">
+			<Style.Triggers>
+				<Trigger Property="IsSelected"
+				         Value="True">
+					<Setter Property="BorderBrush"
+					        Value="Transparent" />
+					<Setter Property="BorderThickness"
+					        Value="0" />
+				</Trigger>
+			</Style.Triggers>
+			<Style.Resources>
+				<SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="LightBlue" />
+			</Style.Resources>
+		</Style>
 	</Application.Resources>
 </Application>
