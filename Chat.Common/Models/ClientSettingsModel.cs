@@ -43,13 +43,13 @@ namespace Chat.Common.Models
 			{
 				settings.ClientId = Guid.NewGuid();
 				settings.DisplayName = "Anon" + settings.ClientId.ToString();
-				settings.SaveChanges(path);
+				settings.SaveChanges(path, true);
 			}
 
 			return settings;
 		}
 
-		private void SaveChanges(string path)
+		public void SaveChanges(string path, bool isNewUser)
 		{
 			if (string.IsNullOrWhiteSpace(path))
 			{
@@ -61,9 +61,12 @@ namespace Chat.Common.Models
 				new JsonSerializer().Serialize(w, this);
 			}
 
-			using (var db = new ChatDbContext())
+			if (isNewUser)
 			{
-				db.UsersRepository.Add(new User(this.ClientId, this.DisplayName));
+				using (var db = new ChatDbContext())
+				{
+					db.UsersRepository.Add(new User(this.ClientId, this.DisplayName));
+				}
 			}
 		}
 	}

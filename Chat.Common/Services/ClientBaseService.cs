@@ -19,6 +19,7 @@ namespace Chat.Common.Services
 		public void SetDisplayName(string displayName)
 		{
 			this.Settings.DisplayName = displayName;
+			this.Settings.SaveChanges("settings.json", false);
 
 			using (var db = new ChatDbContext())
 			{

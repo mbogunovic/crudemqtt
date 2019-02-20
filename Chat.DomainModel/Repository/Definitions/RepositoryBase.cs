@@ -47,7 +47,7 @@ namespace Chat.DomainModel.Repository.Definitions
 				_context.SaveChanges();
 				return true;
 			}
-			catch
+			catch (Exception ex)
 			{
 				return false;
 			}
