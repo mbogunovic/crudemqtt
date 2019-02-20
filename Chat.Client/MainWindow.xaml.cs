@@ -19,12 +19,13 @@ namespace Chat.Client
 		public MainWindow()
 		{
 			if (_context.Client == null)
-				Application.Current.Shutdown();
+				Environment.Exit(0);
 
 			InitializeComponent();
 
 			tbDisplayName.Text = $"Hello {_context.Client.DisplayName}";
 			UpdateHomeDataGrid();
+
 			_context.Client.OnRoomsChange += OnRoomsChange;
 		}
 
@@ -35,14 +36,10 @@ namespace Chat.Client
 
 		#endregion
 
-		private void TbDisplayName_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-		{
-			var popup = new EditDisplayNameWindow(ref this.tbDisplayName);
-			popup.ShowDialog();
-		}
+		#region [Window Functionalities]
 
 		private void Close_MouseDown(object sender, MouseButtonEventArgs e) =>
-			Application.Current.Shutdown();
+			Environment.Exit(0);
 
 		private void Maximize_MouseDown(object sender, MouseButtonEventArgs e)
 		{
@@ -60,6 +57,8 @@ namespace Chat.Client
 
 		private void Minimize_MouseDown(object sender, MouseButtonEventArgs e) =>
 			this.WindowState = WindowState.Minimized;
+
+		#endregion
 
 		#region [MyRooms]
 
@@ -102,9 +101,17 @@ namespace Chat.Client
 
 		#endregion
 
+		#region [Home]
+
 		private void btnHome_MouseDown(object sender, MouseButtonEventArgs e)
 		{
 			UpdateHomeDataGrid();
+		}
+
+		private void TbDisplayName_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+		{
+			var popup = new EditDisplayNameWindow(ref this.tbDisplayName);
+			popup.ShowDialog();
 		}
 
 		private void UpdateHomeDataGrid(string name = null) =>
@@ -112,5 +119,6 @@ namespace Chat.Client
 				this._context.DatabaseContext.RoomsRepository.GetAll()
 					.Where(x => string.IsNullOrWhiteSpace(name) || x.Name.ToLower().Contains(name.ToLower()))
 					.ToList());
+		#endregion
 	}
 }

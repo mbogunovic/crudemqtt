@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:Chat.Client"
 			 xmlns:context="clr-namespace:Chat.Client.Context"
 			 StartupUri="MainWindow.xaml"
-             ShutdownMode="OnMainWindowClose">
+             ShutdownMode="OnExplicitShutdown">
 	<Application.Resources>
 		<context:ClientContext x:Key="context"/>
 		<Style TargetType="{x:Type TabControl}">
