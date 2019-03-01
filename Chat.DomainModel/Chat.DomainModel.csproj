@@ -54,10 +54,6 @@
     <Compile Include="Domain\Message.cs" />
     <Compile Include="Domain\Room.cs" />
     <Compile Include="Domain\User.cs" />
-    <Compile Include="Migrations\201902240904065_2019-2-24.cs" />
-    <Compile Include="Migrations\201902240904065_2019-2-24.Designer.cs">
-      <DependentUpon>201902240904065_2019-2-24.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201902240930533_changes.cs" />
     <Compile Include="Migrations\201902240930533_changes.Designer.cs">
       <DependentUpon>201902240930533_changes.cs</DependentUpon>
@@ -80,9 +76,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201902240904065_2019-2-24.resx">
-      <DependentUpon>201902240904065_2019-2-24.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902240930533_changes.resx">
       <DependentUpon>201902240930533_changes.cs</DependentUpon>
     </EmbeddedResource>
