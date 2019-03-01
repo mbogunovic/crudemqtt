@@ -26,7 +26,7 @@ namespace Chat.Client.Services
 			}
 	}
 
-		public void RoomCreated() =>
+		public void RoomsChange() =>
 			this.Publish("", Constants.LOBBY_TOPIC);
 	}
 }

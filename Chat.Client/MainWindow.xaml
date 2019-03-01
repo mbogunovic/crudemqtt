@@ -99,15 +99,24 @@
 						<TextBlock Text="Join"/>
 					</Button>
 					<TextBlock Text="Search:" HorizontalAlignment="Right" Margin="0, 0, 210, 0"/>
-					<TextBox Margin="0,0,50,0" Width="150" HorizontalAlignment="Right"/>
-					<Button BorderBrush="Transparent" Padding="2,2,2,2" Width="40" HorizontalAlignment="Right">
+					<TextBox x:Name="tbxHomeSearch" Margin="0,0,50,0" Width="150" HorizontalAlignment="Right"/>
+					<Button x:Name="btnHomeSearch" BorderBrush="Transparent" Padding="2,2,2,2" Width="40" HorizontalAlignment="Right" Click="BtnHomeSearch_Click">
 						<Image Source="/images/search.ico" />
 					</Button>
 
 					<DataGrid x:Name="dgHome" Margin="0,10,0,0" Grid.Row="1" CanUserAddRows="False" AutoGenerateColumns="False" GridLinesVisibility="None" CanUserResizeRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserReorderColumns="False">
 						<DataGrid.Columns>
-							<DataGridTextColumn IsReadOnly = "True" Width="*" Header="Id" Binding="{Binding Id}" />
+							<DataGridTextColumn Width="*" Header="Id" Binding="{Binding Id}" />
 							<DataGridTextColumn IsReadOnly = "True" Width="*" Header="Name" Binding="{Binding Name}" />
+							<DataGridTextColumn IsReadOnly = "True" Width="*" Header="Online" >
+								<DataGridTextColumn.Binding>
+									<MultiBinding StringFormat="{}{0}/{1}">
+										<Binding Path="NoOfOnlineUsers" />
+										<Binding Path="NoOfActiveUsers" />
+									</MultiBinding>
+								</DataGridTextColumn.Binding>
+							</DataGridTextColumn>
+							<DataGridTextColumn IsReadOnly = "True" Width="*" Header="Creator" Binding="{Binding User.DisplayName}" />
 						</DataGrid.Columns>
 					</DataGrid>
 				</Grid>

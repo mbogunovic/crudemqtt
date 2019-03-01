@@ -72,7 +72,7 @@ namespace Chat.Client
 					Name = this.tbxRoomName.Text
 				});
 
-				this._context.Client.RoomCreated();
+				this._context.Client.RoomsChange();
 
 				UpdateMyRoomsDataGrid();
 			}
@@ -87,12 +87,15 @@ namespace Chat.Client
 					.Where(x => string.IsNullOrWhiteSpace(name) || x.Name.ToLower().Contains(name.ToLower()))
 					.ToList();
 
-		private void btnMyRoomsSave_Click(object sender, RoutedEventArgs e) =>
+		private void btnMyRoomsSave_Click(object sender, RoutedEventArgs e) {
+			this._context.Client.RoomsChange();
 			this._context.DatabaseContext.RoomsRepository.Update(this.dgMyRooms.CurrentItem as Room);
+		}
 
 		private void btnMyRoomsDelete_Click(object sender, RoutedEventArgs e)
 		{
 			this._context.DatabaseContext.RoomsRepository.Delete(this.dgMyRooms.CurrentItem as Room);
+			this._context.Client.RoomsChange();
 			UpdateMyRoomsDataGrid();
 		}
 
@@ -114,10 +117,15 @@ namespace Chat.Client
 			popup.ShowDialog();
 		}
 
-		private void UpdateHomeDataGrid(string name = null) =>
+		private void BtnHomeSearch_Click(object sender, RoutedEventArgs e) =>
+			UpdateHomeDataGrid(this.tbxHomeSearch.Text);
+
+		private void UpdateHomeDataGrid(string query = null) =>
 			this.Dispatcher.Invoke(() => dgHome.ItemsSource =
 				this._context.DatabaseContext.RoomsRepository.GetAll()
-					.Where(x => string.IsNullOrWhiteSpace(name) || x.Name.ToLower().Contains(name.ToLower()))
+					.Where(x => string.IsNullOrWhiteSpace(query) 
+						|| x.Name.ToLower().Contains(query.ToLower())
+						|| x.User.DisplayName.ToLower().Contains(query.ToLower()))
 					.ToList());
 		#endregion
 	}

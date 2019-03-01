@@ -30,7 +30,7 @@ namespace Chat.DomainModel.Repository.Definitions
 
 		#region [Write Methods]
 
-		public T Add(T item)
+		public virtual T Add(T item)
 		{
 			item.Id = item.Id == Guid.Empty ? Guid.NewGuid() : item.Id;
 			var entity = _context.Set<T>().Add(item);

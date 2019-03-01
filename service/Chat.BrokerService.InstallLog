@@ -1,47 +1,9 @@
-﻿Installing assembly 'D:\Max\Projects\Chat\BrokerService\bin\Debug\Chat.BrokerService.exe'.
+﻿Uninstalling assembly 'D:\Max\Projects\Chat\Chat.BrokerService\bin\Debug\Chat.BrokerService.exe'.
 Affected parameters are:
    logtoconsole = 
-   logfile = D:\Max\Projects\Chat\BrokerService\bin\Debug\Chat.BrokerService.InstallLog
-   assemblypath = D:\Max\Projects\Chat\BrokerService\bin\Debug\Chat.BrokerService.exe
-Installing service Mqtt Broker...
-Service Mqtt Broker has been successfully installed.
-Creating EventLog source Mqtt Broker in log Application...
-Committing assembly 'D:\Max\Projects\Chat\BrokerService\bin\Debug\Chat.BrokerService.exe'.
-Affected parameters are:
-   logtoconsole = 
-   logfile = D:\Max\Projects\Chat\BrokerService\bin\Debug\Chat.BrokerService.InstallLog
-   assemblypath = D:\Max\Projects\Chat\BrokerService\bin\Debug\Chat.BrokerService.exe
-Uninstalling assembly 'D:\Max\Projects\Chat\BrokerService\bin\Debug\Chat.BrokerService.exe'.
-Affected parameters are:
-   logtoconsole = 
-   logfile = D:\Max\Projects\Chat\BrokerService\bin\Debug\Chat.BrokerService.InstallLog
-   assemblypath = D:\Max\Projects\Chat\BrokerService\bin\Debug\Chat.BrokerService.exe
+   assemblypath = D:\Max\Projects\Chat\Chat.BrokerService\bin\Debug\Chat.BrokerService.exe
+   logfile = D:\Max\Projects\Chat\Chat.BrokerService\bin\Debug\Chat.BrokerService.InstallLog
 Removing EventLog source Mqtt Broker.
-Service Mqtt Broker is being removed from the system...
-Service Mqtt Broker was successfully removed from the system.
-Installing assembly 'D:\Max\Projects\Chat\Chat.BrokerService\bin\Debug\Chat.BrokerService.exe'.
-Affected parameters are:
-   logtoconsole = 
-   logfile = D:\Max\Projects\Chat\Chat.BrokerService\bin\Debug\Chat.BrokerService.InstallLog
-   assemblypath = D:\Max\Projects\Chat\Chat.BrokerService\bin\Debug\Chat.BrokerService.exe
-Installing service Mqtt Broker...
-Creating EventLog source Mqtt Broker in log Application...
-Rolling back assembly 'D:\Max\Projects\Chat\Chat.BrokerService\bin\Debug\Chat.BrokerService.exe'.
-Affected parameters are:
-   logtoconsole = 
-   logfile = D:\Max\Projects\Chat\Chat.BrokerService\bin\Debug\Chat.BrokerService.InstallLog
-   assemblypath = D:\Max\Projects\Chat\Chat.BrokerService\bin\Debug\Chat.BrokerService.exe
-Restoring event log to previous state for source Mqtt Broker.
-Installing assembly 'D:\Max\Projects\Chat\service\Chat.BrokerService.exe'.
-Affected parameters are:
-   logtoconsole = 
-   logfile = D:\Max\Projects\Chat\service\Chat.BrokerService.InstallLog
-   assemblypath = D:\Max\Projects\Chat\service\Chat.BrokerService.exe
-Installing service Mqtt Broker...
-Service Mqtt Broker has been successfully installed.
-Creating EventLog source Mqtt Broker in log Application...
-Committing assembly 'D:\Max\Projects\Chat\service\Chat.BrokerService.exe'.
-Affected parameters are:
-   logtoconsole = 
-   logfile = D:\Max\Projects\Chat\service\Chat.BrokerService.InstallLog
-   assemblypath = D:\Max\Projects\Chat\service\Chat.BrokerService.exe
+An exception occurred during the uninstallation of the System.Diagnostics.EventLogInstaller installer.
+System.Security.SecurityException: Requested registry access is not allowed.
+An exception occurred while uninstalling. This exception will be ignored and the uninstall will continue. However, the application might not be fully uninstalled after the uninstall is complete.
