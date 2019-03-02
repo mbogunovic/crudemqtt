@@ -16,10 +16,12 @@ namespace Chat.DomainModel.Context
 		public IUserRepository UsersRepository => new UserRepository(this);
 		public IRoomRepository RoomsRepository => new RoomRepository(this);
 		public IMessageRepository MessagesRepository => new MessageRepository(this);
+		public IRoomUserRepository RoomUsersRepository => new RoomUserRepository(this);
 
 		private DbSet<User> Users { get; set; }
 		private DbSet<Room> Rooms { get; set; }
 		private DbSet<Message> Messages { get; set; }
+		private DbSet<RoomUser> RoomUsers { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{

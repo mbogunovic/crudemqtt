@@ -106,6 +106,8 @@ namespace Chat.Client
 
 		#region [Home]
 
+		#region [Events]
+
 		private void btnHome_MouseDown(object sender, MouseButtonEventArgs e)
 		{
 			UpdateHomeDataGrid();
@@ -117,8 +119,55 @@ namespace Chat.Client
 			popup.ShowDialog();
 		}
 
+		private void dgHome_SelectionChanged(object sender, SelectionChangedEventArgs e) =>
+			Clipboard.SetText((dgHome.SelectedItem as Room).Id.ToString());
+
+		private void dgHome_MouseDown(object sender, MouseButtonEventArgs e)
+		{
+			var selectedRoom = dgHome.SelectedItem as Room;
+			if (selectedRoom != null)
+			{
+				JoinOrEnterRoom(selectedRoom);
+			}
+		}
+
+		private void btnJoinRoom_Click(object sender, RoutedEventArgs e)
+		{
+			if (!string.IsNullOrWhiteSpace(this.tbxJoinRoom.Text) && Guid.TryParse(this.tbxJoinRoom.Text, out Guid roomId))
+				JoinOrEnterRoom(this._context.DatabaseContext.RoomsRepository.GetById(roomId));
+		}
+
 		private void BtnHomeSearch_Click(object sender, RoutedEventArgs e) =>
 			UpdateHomeDataGrid(this.tbxHomeSearch.Text);
+
+		#endregion
+
+		#region [Methods]
+
+		private void JoinOrEnterRoom(Room room)
+		{
+			var currentUserId = this._context.Client.Id;
+			var roomUser = room.RoomUsers.FirstOrDefault(x => x.UserId.Equals(currentUserId));
+			if (roomUser == null)
+			{
+				roomUser = new RoomUser()
+				{
+					IsActive = true,
+					IsChatting = true,
+					RoomId = room.Id,
+					UserId = this._context.Client.Id
+				};
+
+				this._context.DatabaseContext.RoomUsersRepository.Add(roomUser);
+			}
+			else
+			{
+				roomUser.IsChatting = true;
+				this._context.DatabaseContext.RoomUsersRepository.Update(roomUser);
+			}
+
+			this._context.Client.RoomsChange();
+		}
 
 		private void UpdateHomeDataGrid(string query = null) =>
 			this.Dispatcher.Invoke(() => dgHome.ItemsSource =
@@ -127,6 +176,8 @@ namespace Chat.Client
 						|| x.Name.ToLower().Contains(query.ToLower())
 						|| x.User.DisplayName.ToLower().Contains(query.ToLower()))
 					.ToList());
+		#endregion
+
 		#endregion
 	}
 }
