@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -17,9 +18,13 @@ namespace Chat.DomainModel.Domain
 		[Required]
 		public string Name { get; set; }
 
-		public virtual ICollection<Message> Messages { get; set; }
 		public virtual ICollection<RoomUser> RoomUsers { get; set; }
 
+		[NotMapped]
+		public ObservableCollection<Message> Messages => new ObservableCollection<Message>(this.RoomUsers
+			.SelectMany(x => x.Messages)
+			.OrderBy(x => x.SentDate)
+			.ToList() ?? new List<Message>());
 		[NotMapped]
 		public int NoOfActiveUsers => this.RoomUsers.Where(x => x.IsActive).Count();
 		[NotMapped]

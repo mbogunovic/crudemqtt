@@ -15,6 +15,7 @@ namespace Chat.Client
 	public partial class MainWindow : Window
 	{
 		public readonly ClientContext _context = Application.Current.FindResource("context") as ClientContext;
+		private List<RoomWindow> roomWindows = new List<RoomWindow>();
 
 		public MainWindow()
 		{
@@ -166,12 +167,15 @@ namespace Chat.Client
 				this._context.DatabaseContext.RoomUsersRepository.Update(roomUser);
 			}
 
+			var roomWindow = new RoomWindow(room);
+			roomWindow.Show();
+			roomWindows.Add(roomWindow);
 			this._context.Client.RoomsChange();
 		}
 
 		private void UpdateHomeDataGrid(string query = null) =>
 			this.Dispatcher.Invoke(() => dgHome.ItemsSource =
-				this._context.DatabaseContext.RoomsRepository.GetAll()
+				this._context.DatabaseContext.RoomsRepository.GetAllAvailableByUserId(this._context.Client.Id)
 					.Where(x => string.IsNullOrWhiteSpace(query) 
 						|| x.Name.ToLower().Contains(query.ToLower())
 						|| x.User.DisplayName.ToLower().Contains(query.ToLower()))

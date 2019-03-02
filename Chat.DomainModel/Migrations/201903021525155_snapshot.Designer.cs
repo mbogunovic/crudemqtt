@@ -7,13 +7,13 @@ namespace Chat.DomainModel.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class changes : IMigrationMetadata
+    public sealed partial class snapshot : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(changes));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(snapshot));
         
         string IMigrationMetadata.Id
         {
-            get { return "201902240930533_changes"; }
+            get { return "201903021525155_snapshot"; }
         }
         
         string IMigrationMetadata.Source

@@ -34,5 +34,10 @@ namespace Chat.DomainModel.Repository.Definitions
 
 			return r; 
 		}
+
+		public IEnumerable<Room> GetAllAvailableByUserId(Guid userId) =>
+			_context.Set<Room>()
+				.Where(x => !x.RoomUsers
+					.Any(y => y.UserId.Equals(userId) && y.IsActive.Equals(false)));
 	}
 }
