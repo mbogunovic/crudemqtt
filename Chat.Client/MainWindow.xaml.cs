@@ -120,8 +120,11 @@ namespace Chat.Client
 			popup.ShowDialog();
 		}
 
-		private void dgHome_SelectionChanged(object sender, SelectionChangedEventArgs e) =>
-			Clipboard.SetText((dgHome.SelectedItem as Room).Id.ToString());
+		private void dgHome_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (dgHome.SelectedItem != null)
+				Clipboard.SetText((dgHome.SelectedItem as Room).Id.ToString());
+		}
 
 		private void dgHome_MouseDown(object sender, MouseButtonEventArgs e)
 		{

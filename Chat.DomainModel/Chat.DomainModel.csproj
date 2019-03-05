@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Context\ChatDbContext.cs" />
     <Compile Include="Domain\BaseModel.cs" />
+    <Compile Include="Domain\BaseViewModel.cs" />
     <Compile Include="Domain\RoomUser.cs" />
     <Compile Include="Domain\Message.cs" />
     <Compile Include="Domain\Room.cs" />

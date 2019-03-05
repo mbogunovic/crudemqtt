@@ -8,6 +8,15 @@ namespace Chat.DomainModel.Domain
 	{
 		public virtual RoomUser RoomUser { get; set; }
 
+		public Message() { }
+
+		public Message(Guid roomUserId, string text, DateTime sentDate)
+		{
+			this.RoomUserId = roomUserId;
+			this.Text = text;
+			this.SentDate = sentDate;
+		}
+
 		[Required]
 		[ForeignKey("RoomUser")]
 		public Guid RoomUserId { get; set; }
@@ -17,5 +26,8 @@ namespace Chat.DomainModel.Domain
 
 		[Required]
 		public DateTime SentDate { get; set; }
+
+		[NotMapped]
+		public bool IsCurrentUsersMessage => this.CurrentUserId.Equals(this.RoomUser.UserId);
 	}
 }

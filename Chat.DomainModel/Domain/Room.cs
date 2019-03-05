@@ -21,10 +21,21 @@ namespace Chat.DomainModel.Domain
 		public virtual ICollection<RoomUser> RoomUsers { get; set; }
 
 		[NotMapped]
-		public ObservableCollection<Message> Messages => new ObservableCollection<Message>(this.RoomUsers
+		public ObservableCollection<Message> Messages => GetMessages();
+
+
+		private ObservableCollection<Message> GetMessages()
+		{
+			var result = this.RoomUsers
 			.SelectMany(x => x.Messages)
 			.OrderBy(x => x.SentDate)
-			.ToList() ?? new List<Message>());
+			.ToList() ?? new List<Message>();
+
+			result.ForEach(x => x.CurrentUserId = this.CurrentUserId);
+
+			return new ObservableCollection<Message>(result);
+		}
+
 		[NotMapped]
 		public int NoOfActiveUsers => this.RoomUsers.Where(x => x.IsActive).Count();
 		[NotMapped]

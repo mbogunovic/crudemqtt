@@ -67,12 +67,22 @@
 				</Image>
 			</Grid>
 		</Border>
-		<ScrollViewer Grid.Row="2" Grid.Column="1" VerticalScrollBarVisibility="Auto">
+		<ScrollViewer x:Name="scvMessages" Grid.Row="2" Grid.Column="1" VerticalScrollBarVisibility="Auto">
 			<ItemsControl ItemsSource="{Binding Room.Messages}">
 				<ItemsControl.ItemTemplate>
 					<DataTemplate>
 						<Grid>
 							<Grid Grid.Row="1">
+								<Grid.Style>
+									<Style TargetType="{x:Type Grid}">
+										<Setter Property="Grid.Column" Value="0"/>
+										<Style.Triggers>
+											<DataTrigger Binding="{Binding IsCurrentUsersMessage }" Value="True">
+												<Setter Property="Grid.Column" Value="1"/>
+											</DataTrigger>
+										</Style.Triggers>
+									</Style>
+								</Grid.Style>
 								<Label Foreground="LightSlateGray" FontSize="8" Content="{Binding RoomUser.User.DisplayName}"></Label>
 								<Label Foreground="LightSlateGray" FontSize="8" Grid.Column="1" Content="{Binding SentDate}"></Label>
 								<Grid.ColumnDefinitions>
@@ -80,12 +90,27 @@
 									<ColumnDefinition Width="auto"/>
 								</Grid.ColumnDefinitions>
 							</Grid>
-							<Border Grid.Row="2" Padding="10" Background="AntiqueWhite" CornerRadius="0,15,0,15">
+							<Border Grid.Row="2" Padding="10">
+								<Border.Style>
+									<Style TargetType="{x:Type Border }">
+										<Setter Property="Grid.Column" Value="0"/>
+										<Setter Property="Background" Value="AntiqueWhite" />
+										<Setter Property="CornerRadius" Value="0,15,0,15" />
+										<Style.Triggers>
+											<DataTrigger Binding="{Binding IsCurrentUsersMessage }" Value="True">
+												<Setter Property="Grid.Column" Value="1"/>
+												<Setter Property="Background" Value="Aquamarine"/>
+												<Setter Property="CornerRadius" Value="15,0,15,0"/>
+											</DataTrigger>
+										</Style.Triggers>
+									</Style>
+								</Border.Style>
 								<TextBlock TextWrapping="Wrap" Text="{Binding Text}"/>
 							</Border>
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="*"/>
 								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="15"/>
 							</Grid.ColumnDefinitions>
 							<Grid.RowDefinitions>
 								<RowDefinition Height="5"/>
@@ -98,7 +123,7 @@
 				</ItemsControl.ItemTemplate>
 			</ItemsControl>
 		</ScrollViewer>
-		<Grid Grid.Row="4" Grid.Column="1">
+		<Grid Grid.Row="4" Grid.Column="1" Margin="0,0,20,0">
 			<TextBox x:Name="tbMessage" Grid.Column="0" FontSize="15" Padding="15,8,3,0" BorderThickness="0.5,0.5,0,0.5">
 				<TextBox.Resources>
 					<Style TargetType="{x:Type Border}">
@@ -136,7 +161,6 @@
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="20" />
 			<ColumnDefinition Width="*" />
-			<ColumnDefinition Width="20" />
 		</Grid.ColumnDefinitions>
 	</Grid>
 </Window>

@@ -26,10 +26,30 @@ namespace Chat.Client
 
         public RoomWindow(Room room)
         {
+			room.CurrentUserId = this._context.Client.Id;
+
 			Room = room;
             InitializeComponent();
 			this.DataContext = this;
+
+			_context.Client.OnChatChange += OnChatChange;
 		}
+
+		#region [Events]
+
+		private void OnChatChange(object sender, EventArgs e)
+		{
+			if(sender != null 
+				&& Guid.TryParse(sender.ToString(), out Guid roomId)
+				&& roomId.Equals(this.Room.Id))
+			{
+				this.Room.RoomUsers = this._context.DatabaseContext.RoomsRepository.GetById(this.Room.Id).RoomUsers;
+				this.Room.RaisePropertyChanged(nameof(Room.Messages));
+				this.Dispatcher.Invoke(() => this.scvMessages.ScrollToBottom());
+			}
+		}
+
+		#endregion
 
 		#region [Window Functionalities]
 
@@ -57,17 +77,18 @@ namespace Chat.Client
 
 		private void BtnSend_Click(object sender, RoutedEventArgs e)
 		{
-			var msg = new Message()
+			var message = this.tbMessage.Text;
+			if (!string.IsNullOrWhiteSpace(message))
 			{
-				RoomUserId = this.Room.RoomUsers.FirstOrDefault(x => x.UserId.Equals(this._context.Client.Id)).Id,
-				SentDate = DateTime.Now,
-				Text = this.tbMessage.Text
-			};
 
-			this._context.DatabaseContext.MessagesRepository.Add(msg);
-			this.Room = this._context.DatabaseContext.RoomsRepository.GetById(this.Room.Id);
-			this.Room.RaisePropertyChanged(nameof(Room.Messages));
-			this.tbMessage.Text = string.Empty;
+				var roomUserId = this.Room.RoomUsers.FirstOrDefault(x => x.UserId.Equals(this._context.Client.Id)).Id;
+				if (roomUserId == Guid.Empty)
+					throw new NullReferenceException($"One of the following references are not set: {nameof(roomUserId)}.");
+
+				this._context.DatabaseContext.MessagesRepository.Add(new Message(roomUserId, message, DateTime.Now));
+				this._context.Client.ChatChange(this.Room.Id);
+				this.tbMessage.Text = string.Empty;
+			}
 		}
 	}
 }

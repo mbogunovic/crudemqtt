@@ -1,20 +1,15 @@
 ﻿using System;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Chat.DomainModel.Domain
 {
-	public abstract class BaseModel : ViewModelBase
+	public abstract class BaseModel : BaseViewModel
 	{
 		[Key]
 		public Guid Id { get; set; }
-	}
 
-	public class ViewModelBase : INotifyPropertyChanged
-	{
-		public event PropertyChangedEventHandler PropertyChanged;
-
-		public void RaisePropertyChanged(string propertyName = "") =>
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		[NotMapped]
+		public Guid CurrentUserId { get; set; }
 	}
 }
