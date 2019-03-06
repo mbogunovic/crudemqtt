@@ -16,45 +16,29 @@ using System.Windows.Shapes;
 
 namespace Chat.Client
 {
-    /// <summary>
-    /// Interaction logic for RoomWindow.xaml
-    /// </summary>
-    public partial class RoomWindow : Window
-    {
+	/// <summary>
+	/// Interaction logic for RoomWindow.xaml
+	/// </summary>
+	public partial class RoomWindow : Window
+	{
 		public readonly ClientContext _context = Application.Current.FindResource("context") as ClientContext;
 		public Room Room { get; set; }
 
-        public RoomWindow(Room room)
-        {
+		public RoomWindow(Room room)
+		{
 			room.CurrentUserId = this._context.Client.Id;
 
 			Room = room;
-            InitializeComponent();
+			InitializeComponent();
 			this.DataContext = this;
 
 			_context.Client.OnChatChange += OnChatChange;
 		}
 
-		#region [Events]
-
-		private void OnChatChange(object sender, EventArgs e)
-		{
-			if(sender != null 
-				&& Guid.TryParse(sender.ToString(), out Guid roomId)
-				&& roomId.Equals(this.Room.Id))
-			{
-				this.Room.RoomUsers = this._context.DatabaseContext.RoomsRepository.GetById(this.Room.Id).RoomUsers;
-				this.Room.RaisePropertyChanged(nameof(Room.Messages));
-				this.Dispatcher.Invoke(() => this.scvMessages.ScrollToBottom());
-			}
-		}
-
-		#endregion
-
 		#region [Window Functionalities]
 
 		private void Close_MouseDown(object sender, MouseButtonEventArgs e) =>
-			Environment.Exit(0);
+			this.Close();
 
 		private void Maximize_MouseDown(object sender, MouseButtonEventArgs e)
 		{
@@ -75,7 +59,35 @@ namespace Chat.Client
 
 		#endregion
 
-		private void BtnSend_Click(object sender, RoutedEventArgs e)
+		#region [Events]
+
+		private void OnChatChange(object sender, EventArgs e)
+		{
+			if (sender != null
+				&& Guid.TryParse(sender.ToString(), out Guid roomId)
+				&& roomId.Equals(this.Room.Id))
+			{
+				this._context.DatabaseContext.ChangeTracker.DetectChanges();
+				this.Room.RoomUsers = this._context.DatabaseContext.RoomsRepository.GetById(this.Room.Id).RoomUsers;
+				this.Room.RaisePropertyChanged(nameof(Room.Messages));
+				this.Dispatcher.Invoke(() => this.scvMessages.ScrollToBottom());
+			}
+		}
+
+		private void BtnSend_Click(object sender, RoutedEventArgs e) =>
+			SendMessage();
+
+		private void tbMessage_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.Key == Key.Return)
+				SendMessage();
+		}
+
+		#endregion
+
+		#region [Methods]
+
+		private void SendMessage()
 		{
 			var message = this.tbMessage.Text;
 			if (!string.IsNullOrWhiteSpace(message))
@@ -86,9 +98,12 @@ namespace Chat.Client
 					throw new NullReferenceException($"One of the following references are not set: {nameof(roomUserId)}.");
 
 				this._context.DatabaseContext.MessagesRepository.Add(new Message(roomUserId, message, DateTime.Now));
+
 				this._context.Client.ChatChange(this.Room.Id);
 				this.tbMessage.Text = string.Empty;
 			}
 		}
+
+		#endregion
 	}
 }

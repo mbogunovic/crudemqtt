@@ -124,7 +124,7 @@
 			</ItemsControl>
 		</ScrollViewer>
 		<Grid Grid.Row="4" Grid.Column="1" Margin="0,0,20,0">
-			<TextBox x:Name="tbMessage" Grid.Column="0" FontSize="15" Padding="15,8,3,0" BorderThickness="0.5,0.5,0,0.5">
+			<TextBox x:Name="tbMessage" Grid.Column="0" FontSize="15" Padding="15,8,3,0" BorderThickness="0.5,0.5,0,0.5" KeyDown="tbMessage_KeyDown">
 				<TextBox.Resources>
 					<Style TargetType="{x:Type Border}">
 						<Setter Property="CornerRadius" Value="20,0,0,20"/>

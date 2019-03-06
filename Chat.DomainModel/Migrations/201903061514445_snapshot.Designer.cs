@@ -13,7 +13,7 @@ namespace Chat.DomainModel.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201903021525155_snapshot"; }
+            get { return "201903061514445_snapshot"; }
         }
         
         string IMigrationMetadata.Source

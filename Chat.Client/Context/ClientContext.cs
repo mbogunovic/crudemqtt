@@ -7,8 +7,13 @@ namespace Chat.Client.Context
 {
 	public class ClientContext : ContentControl
 	{
+		public ClientContext()
+		{
+			this.DatabaseContext = new ChatDbContext();
+		}
+
 		public readonly ClientService Client = ClientBaseService.Initialize<ClientService>();
-		public ChatDbContext DatabaseContext => new ChatDbContext();
+		public ChatDbContext DatabaseContext { get; }
 	}
 
 	
