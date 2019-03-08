@@ -6,6 +6,7 @@ using System.Windows.Input;
 using Chat.DomainModel.Domain;
 using System.Collections.Generic;
 using System;
+using Chat.DomainModel.Context;
 
 namespace Chat.Client
 {
@@ -131,14 +132,14 @@ namespace Chat.Client
 			var selectedRoom = dgHome.SelectedItem as Room;
 			if (selectedRoom != null)
 			{
-				JoinOrEnterRoom(selectedRoom);
+				JoinOrEnterRoom(selectedRoom.Id);
 			}
 		}
 
 		private void btnJoinRoom_Click(object sender, RoutedEventArgs e)
 		{
 			if (!string.IsNullOrWhiteSpace(this.tbxJoinRoom.Text) && Guid.TryParse(this.tbxJoinRoom.Text, out Guid roomId))
-				JoinOrEnterRoom(this._context.DatabaseContext.RoomsRepository.GetById(roomId));
+				JoinOrEnterRoom(roomId);
 		}
 
 		private void BtnHomeSearch_Click(object sender, RoutedEventArgs e) =>
@@ -148,41 +149,47 @@ namespace Chat.Client
 
 		#region [Methods]
 
-		private void JoinOrEnterRoom(Room room)
+		private void JoinOrEnterRoom(Guid roomId)
 		{
-			var currentUserId = this._context.Client.Id;
-			var roomUser = room.RoomUsers.FirstOrDefault(x => x.UserId.Equals(currentUserId));
-			if (roomUser == null)
+			using (ChatDbContext dbContext = _context.DatabaseContext)
 			{
-				roomUser = new RoomUser()
+				Guid currentUserId = _context.Client.Id;
+				Room room = dbContext.RoomsRepository.GetById(roomId);
+				RoomUser roomUser = room.RoomUsers
+					.FirstOrDefault(x => x.RoomId.Equals(roomId)
+										 && x.UserId.Equals(currentUserId));
+				if (roomUser == null)
 				{
-					IsActive = true,
-					IsChatting = true,
-					RoomId = room.Id,
-					UserId = this._context.Client.Id
-				};
+					roomUser = new RoomUser()
+					{
+						IsActive = true,
+						IsChatting = true,
+						RoomId = roomId,
+						UserId = currentUserId
+					};
 
-				this._context.DatabaseContext.RoomUsersRepository.Add(roomUser);
-			}
-			else
-			{
-				roomUser.IsChatting = true;
-				this._context.DatabaseContext.RoomUsersRepository.Update(roomUser);
-			}
+					dbContext.RoomUsersRepository.Add(roomUser);
+				}
+				else
+				{
+					roomUser.IsChatting = true;
+					dbContext.RoomUsersRepository.Update(roomUser);
+				}
 
-			var roomWindow = new RoomWindow(room);
-			roomWindow.Show();
-			roomWindows.Add(roomWindow);
-			this._context.Client.RoomsChange();
+				RoomWindow roomWindow = new RoomWindow(room);
+				roomWindow.Show();
+				roomWindows.Add(roomWindow);
+				_context.Client.RoomsChange();
+			}
 		}
 
 		private void UpdateHomeDataGrid(string query = null) =>
-			this.Dispatcher.Invoke(() => dgHome.ItemsSource =
-				this._context.DatabaseContext.RoomsRepository.GetAllAvailableByUserId(this._context.Client.Id)
-					.Where(x => string.IsNullOrWhiteSpace(query) 
-						|| x.Name.ToLower().Contains(query.ToLower())
-						|| x.User.DisplayName.ToLower().Contains(query.ToLower()))
-					.ToList());
+		this.Dispatcher.Invoke(() => dgHome.ItemsSource =
+			this._context.DatabaseContext.RoomsRepository.GetAllAvailableByUserId(this._context.Client.Id)
+				.Where(x => string.IsNullOrWhiteSpace(query) 
+					|| x.Name.ToLower().Contains(query.ToLower())
+					|| x.User.DisplayName.ToLower().Contains(query.ToLower()))
+				.ToList());
 		#endregion
 
 		#endregion

@@ -2,6 +2,8 @@
 using Chat.DomainModel.Domain;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -67,7 +69,6 @@ namespace Chat.Client
 				&& Guid.TryParse(sender.ToString(), out Guid roomId)
 				&& roomId.Equals(this.Room.Id))
 			{
-				this._context.DatabaseContext.ChangeTracker.DetectChanges();
 				this.Room.RoomUsers = this._context.DatabaseContext.RoomsRepository.GetById(this.Room.Id).RoomUsers;
 				this.Room.RaisePropertyChanged(nameof(Room.Messages));
 				this.Dispatcher.Invoke(() => this.scvMessages.ScrollToBottom());
