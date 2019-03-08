@@ -39,6 +39,9 @@ namespace Chat.Client
 
 		#region [Window Functionalities]
 
+		private void Toolbar_MouseDown(object sender, MouseButtonEventArgs e) =>
+			DragMove();
+
 		private void Close_MouseDown(object sender, MouseButtonEventArgs e) =>
 			this.Close();
 
